@@ -47,6 +47,4 @@ const createPicDescription = () => {
   };
 };
 
-const getPics = Array.from({length: PICS_COUNT}, createPicDescription);
-
-getPics();
+const pics = Array.from({length: PICS_COUNT}, createPicDescription);
