@@ -3,7 +3,7 @@ function getRandomNumber(a, b) {
     return NaN;
   }
 
-  if (typeof a !== "number" || typeof b !== "number") {
+  if (typeof a !== 'number' || typeof b !== 'number') {
     return NaN;
   }
 
@@ -24,3 +24,4 @@ const getRandomArrayElement = (elements) =>
   elements[getRandomNumber(0, elements.length - 1)];
 
 export {getRandomArrayElement};
+export {getRandomNumber};

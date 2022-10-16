@@ -1,4 +1,5 @@
 import {getRandomArrayElement} from './util.js';
+import { getRandomNumber} from './util.js';
 
 const PICS_COUNT = 25;
 let idCount = 1;
