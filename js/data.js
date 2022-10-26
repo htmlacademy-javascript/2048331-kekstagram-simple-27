@@ -50,5 +50,7 @@ const createPicDescription = () => {
     comments: getRandomNumber(COMMENTS_COUNT.min, COMMENTS_COUNT.max),
   };
 };
-
+// eslint-disable-next-line
 const pics = Array.from({ length: PICS_COUNT }, createPicDescription);
+
+export {pics};
