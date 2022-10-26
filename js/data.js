@@ -52,3 +52,5 @@ const createPicDescription = () => {
 };
 // eslint-disable-next-line
 const pics = Array.from({ length: PICS_COUNT }, createPicDescription);
+
+export {pics};

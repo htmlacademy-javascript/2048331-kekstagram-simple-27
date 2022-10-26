@@ -1,8 +1,8 @@
-import pics from './data.js';
+import {pics} from './data.js';
 
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const pictures = pics();
+const pictures = pics;
 
 const pictureFragment = document.createDocumentFragment();
 
