@@ -1,26 +1,31 @@
-import {isEscapeKey} from './util.js';
+import { isEscapeKey } from './util.js';
 
-const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
-const uploadFile = document.querySelector('#upload-file');
-const uploadCancel = document.querySelector('#upload-cancel');
+const form = document.querySelector('#upload-select-image');
+const imgUploadOverlay = form.querySelector('.img-upload__overlay');
+const uploadFile = form.querySelector('#upload-file');
+const uploadCancel = form.querySelector('#upload-cancel');
 
-const userModalOpen = () => {
+
+const openUserModal = () => {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('.modal-open');
+  document.addEventListener('keydown', onPopupEscDown);
+  uploadCancel.addEventListener('click', closeUserModal);
 };
 
-const userModalClose = () => {
+function closeUserModal() {
+  form.reset();
   imgUploadOverlay.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscDown);
-};
+  uploadCancel.removeEventListener('click', closeUserModal);
+}
 
 function onPopupEscDown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    userModalClose();
+    closeUserModal();
   }
 }
 
-uploadFile.addEventListener('change', userModalOpen);
-uploadCancel.addEventListener('click', userModalClose);
+uploadFile.addEventListener('change', openUserModal);
