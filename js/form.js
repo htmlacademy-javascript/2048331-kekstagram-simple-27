@@ -1,4 +1,6 @@
 import { isEscapeKey } from './util.js';
+import {resetScale} from './scale.js';
+import {resetEffects} from './effects.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('#upload-select-image');
@@ -14,8 +16,11 @@ const openUserModal = () => {
   uploadCancel.addEventListener('click', closeUserModal);
 };
 
+//Нужно ли сюда добавить body.classlist.remove('.modal-open')
 function closeUserModal() {
   form.reset();
+  resetScale();
+  resetEffects();
   imgUploadOverlay.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscDown);
   uploadCancel.removeEventListener('click', closeUserModal);
