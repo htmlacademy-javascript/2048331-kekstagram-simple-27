@@ -76,7 +76,6 @@ const onFormChange = (evt) => {
     return;
   }
   chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
-  debugger;
   updateSlider();
 };
 
