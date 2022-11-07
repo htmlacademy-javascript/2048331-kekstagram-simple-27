@@ -1,8 +1,3 @@
-const image = document.querySelector('.img-upload__preview img');
-const form = document.querySelector('.img-upload__form');
-const sliderElement = document.querySelector('.effect-level__slider');
-const effectLevel = document.querySelector('.effect-level__value');
-
 const EFFECTS = [
   {
     name: 'none',
@@ -24,7 +19,7 @@ const EFFECTS = [
     min: 0,
     max: 1,
     step: 0.1,
-    unit: '%',
+    unit: '',
   },
   {
     name: 'marvin',
@@ -54,6 +49,9 @@ const EFFECTS = [
 
 const DEFAULT_EFFECT = EFFECTS[0];
 let chosenEffect = DEFAULT_EFFECT;
+const image = document.querySelector('.img-upload__preview img');
+const sliderElement = document.querySelector('.effect-level__slider');
+const effectLevel = document.querySelector('.effect-level__value');
 
 const isDefault = () => chosenEffect === DEFAULT_EFFECT;
 
@@ -78,6 +76,7 @@ const onFormChange = (evt) => {
     return;
   }
   chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+  debugger;
   updateSlider();
 };
 
@@ -97,20 +96,19 @@ const onSliderUpdate = () => {
 const resetEffects = () => {
   chosenEffect = DEFAULT_EFFECT;
   updateSlider();
+  sliderElement.noUiSlider.destroy();
 };
 
-noUiSlider.create(sliderElement, {
-  range: {
-    min: DEFAULT_EFFECT.min,
-    max: DEFAULT_EFFECT.max,
-  },
-  start: DEFAULT_EFFECT.max,
-  step: DEFAULT_EFFECT.step,
-  connect: 'lower',
-});
-updateSlider();
+const createSlider = () => {
+  noUiSlider.create(sliderElement, {
+    range: {
+      min: DEFAULT_EFFECT.min,
+      max: DEFAULT_EFFECT.max,
+    },
+    start: DEFAULT_EFFECT.max,
+    step: DEFAULT_EFFECT.step,
+    connect: 'lower',
+  });
+};
 
-form.addEventListener('change', onFormChange);
-sliderElement.noUiSlider.on('update', onSliderUpdate);
-
-export {resetEffects};
+export { resetEffects, onFormChange, onSliderUpdate, updateSlider,createSlider };

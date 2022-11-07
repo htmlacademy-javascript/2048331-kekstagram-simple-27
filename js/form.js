@@ -1,17 +1,23 @@
 import { isEscapeKey } from './util.js';
-import {resetScale} from './scale.js';
-import {resetEffects} from './effects.js';
+import {resetScale, initScale} from './scale.js';
+import {resetEffects, onFormChange, onSliderUpdate, updateSlider, createSlider} from './effects.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('#upload-select-image');
 const imgUploadOverlay = form.querySelector('.img-upload__overlay');
 const uploadFile = form.querySelector('#upload-file');
 const uploadCancel = form.querySelector('#upload-cancel');
+const sliderElement = document.querySelector('.effect-level__slider');
 
 
 const openUserModal = () => {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('.modal-open');
+  form.addEventListener('change', onFormChange);
+  createSlider();
+  updateSlider();
+  initScale();
+  sliderElement.noUiSlider.on('update', onSliderUpdate);
   document.addEventListener('keydown', onPopupEscDown);
   uploadCancel.addEventListener('click', closeUserModal);
 };
