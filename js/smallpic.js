@@ -1,11 +1,8 @@
-//import { pics } from './data.js'; удаляю массив
-
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document
   .querySelector('#picture')
   .content.querySelector('.picture');
 
-//const pictures = pics; теперь вместо этого массива используется массив с сервера, а pictures объявлена в параметре функции
 const bigPicture = document.querySelector('.big-picture');
 
 const renderPictures = (pictures) => {

@@ -7,7 +7,8 @@ import {
   updateSlider,
   createSlider,
 } from './effects.js';
-import { showSuccess } from './success-message.js';
+import { showError } from './error-modal.js';
+import {sendData} from './api.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('#upload-select-image');
@@ -24,7 +25,7 @@ const openUserModal = () => {
   updateSlider();
   initScale();
   sliderElement.noUiSlider.on('update', onSliderUpdate);
-  document.addEventListener('keydown', onPopupEscDown);
+  document.addEventListener('keydown', onPopupEscKeydown);
   uploadCancel.addEventListener('click', closeUserModal);
 };
 
@@ -33,11 +34,11 @@ function closeUserModal() {
   resetScale();
   resetEffects();
   imgUploadOverlay.classList.add('hidden');
-  document.removeEventListener('keydown', onPopupEscDown);
+  document.removeEventListener('keydown', onPopupEscKeydown);
   uploadCancel.removeEventListener('click', closeUserModal);
 }
 
-function onPopupEscDown(evt) {
+function onPopupEscKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUserModal();
@@ -47,21 +48,13 @@ function onPopupEscDown(evt) {
 uploadFile.addEventListener('change', openUserModal);
 
 //форма отправляется, окно закрывается в случае успешной отправки
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    const formData = new FormData(evt.target);
-
-    fetch('https://27.javascript.pages.academy/kekstagram-simple', {
-      method: 'POST',
-      body: formData,
-    }).then((response) => {
-      if (response.ok) {
-        onSuccess();
-        showSuccess();
-      }
-    });
+    sendData(
+      new FormData(evt.target)
+    );
   });
 };
 
