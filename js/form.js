@@ -7,8 +7,7 @@ import {
   updateSlider,
   createSlider,
 } from './effects.js';
-import { showError } from './error-modal.js';
-import {sendData} from './api.js';
+import { sendData } from './api.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('#upload-select-image');
@@ -17,9 +16,9 @@ const uploadFile = form.querySelector('#upload-file');
 const uploadCancel = form.querySelector('#upload-cancel');
 const sliderElement = document.querySelector('.effect-level__slider');
 
-const openUserModal = () => {
+const onUserModalClick = () => {
   imgUploadOverlay.classList.remove('hidden');
-  body.classList.add('.modal-open');
+  body.classList.add('modal-open');
   form.addEventListener('change', onFormChange);
   createSlider();
   updateSlider();
@@ -33,6 +32,7 @@ function closeUserModal() {
   form.reset();
   resetScale();
   resetEffects();
+  body.classList.remove('modal-open');
   imgUploadOverlay.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscKeydown);
   uploadCancel.removeEventListener('click', closeUserModal);
@@ -45,17 +45,17 @@ function onPopupEscKeydown(evt) {
   }
 }
 
-uploadFile.addEventListener('change', openUserModal);
+uploadFile.addEventListener('change', onUserModalClick);
 
 //форма отправляется, окно закрывается в случае успешной отправки
 const setUserFormSubmit = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    sendData(
-      new FormData(evt.target)
-    );
+    sendData(new FormData(evt.target));
   });
 };
 
-setUserFormSubmit(closeUserModal);
+setUserFormSubmit();
+
+export { closeUserModal };

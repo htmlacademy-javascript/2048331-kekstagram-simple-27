@@ -3,8 +3,6 @@ const pictureTemplate = document
   .querySelector('#picture')
   .content.querySelector('.picture');
 
-const bigPicture = document.querySelector('.big-picture');
-
 const renderPictures = (pictures) => {
   const pictureFragment = document.createDocumentFragment();
 
@@ -14,12 +12,9 @@ const renderPictures = (pictures) => {
     newPicture.querySelector('.picture__img').src = url;
     newPicture.querySelector('.picture__likes').textContent = likes;
     newPicture.querySelector('.picture__comments').textContent = comments;
-    newPicture.addEventListener('click', () => {
-      bigPicture.classList.remove('hidden');
-    });
-    pictureFragment.appendChild(newPicture);
 
-    picturesContainer.appendChild(pictureFragment);
+    pictureFragment.append(newPicture);
+    picturesContainer.append(pictureFragment);
   });
 };
 

@@ -1,7 +1,8 @@
-import { renderPictures } from './smallpic.js';
+import { renderPictures } from './small-pic.js';
 import { showAlert } from './util.js';
 import { showSuccess } from './success-modal.js';
 import { showError } from './error-modal.js';
+import { closeUserModal } from './form.js';
 
 const getData = () => {
   fetch(' https://27.javascript.pages.academy/kekstagram-simple/data')
@@ -22,6 +23,7 @@ const sendData = (body) => {
     .then((response) => {
       if (response.ok) {
         showSuccess();
+        closeUserModal();
         return;
       }
       showError();
