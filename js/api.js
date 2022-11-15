@@ -1,20 +1,15 @@
-import { renderPictures } from './small-pic.js';
-import { showAlert } from './util.js';
-
 const RequestUrl = {
   GET: 'https://27.javascript.pages.academy/kekstagram-simple/data',
   POST: 'https://27.javascript.pages.academy/kekstagram-simple',
 };
 
-const getData = () => {
+const getData = (onSuccess, onFail) => {
   fetch(RequestUrl.GET)
     .then((response) => response.json())
-    .then((pictures) => {
-      renderPictures(pictures);
+    .then((data) => {
+      onSuccess(data);
     })
-    .catch(() => {
-      showAlert('Ошибка при загрузке данных с сервера');
-    });
+    .catch(onFail);
 };
 
 const sendData = (body, onSuccess, onFail) => {
@@ -27,11 +22,10 @@ const sendData = (body, onSuccess, onFail) => {
         onSuccess();
         return;
       }
+
       onFail();
     })
-    .catch(() => {
-      onFail();
-    });
+    .catch(onFail);
 };
 
 export { getData, sendData };
