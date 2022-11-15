@@ -1,12 +1,8 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, removeElementBySelector } from './util.js';
 
 const successTemplate = document
   .querySelector('#success')
   .content.querySelector('.success');
-
-const closeModal = () => {
-  document.querySelector('.success').remove();
-};
 
 const onBackdropClick = (evt) => {
   if (
@@ -15,7 +11,8 @@ const onBackdropClick = (evt) => {
   ) {
     return;
   }
-  document.querySelector('.success').remove();
+  removeElementBySelector( '.success' );
+  document.removeEventListener( 'keydown', onEscKeydown );
 };
 
 const showSuccess = () => {
@@ -28,7 +25,7 @@ const showSuccess = () => {
 function onEscKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeModal();
+    onBackdropClick(evt);
   }
 }
 

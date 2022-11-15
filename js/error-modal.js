@@ -1,35 +1,37 @@
-import { isEscapeKey } from './util.js';
+import {
+  isEscapeKey,
+  removeElementBySelector,
+} from './util.js';
 
 const errorTemplate = document
-  .querySelector('#error')
-  .content.querySelector('.error');
+  .querySelector( '#error' )
+  .content.querySelector( '.error' );
 
-const closeModal = () => {
-  document.querySelector('.error').remove();
-};
-
-const onBackdropClick = (evt) => {
+const onBackdropClick = ( evt ) => {
   if (
-    evt.target.closest('.error__inner') &&
-    !evt.target.classList.contains('error__button')
+    evt.target.closest( '.error__inner' ) &&
+    !evt.target.classList.contains( 'error__button' )
   ) {
     return;
   }
-  document.querySelector('.error').remove();
+  removeElementBySelector( '.error' );
+  document.removeEventListener( 'keydown', onEscKeydown );
 };
 
 const showError = () => {
-  const errorElement = errorTemplate.cloneNode(true);
-  document.body.append(errorElement);
-  errorElement.addEventListener('click', onBackdropClick);
-  document.addEventListener('keydown', onEscKeydown);
+  const errorElement = errorTemplate.cloneNode( true );
+  document.body.append( errorElement );
+  errorElement.addEventListener( 'click', onBackdropClick );
+  document.addEventListener( 'keydown', onEscKeydown );
 };
 
-function onEscKeydown(evt) {
-  if (isEscapeKey(evt)) {
+function onEscKeydown( evt ) {
+  if ( isEscapeKey( evt ) ) {
     evt.preventDefault();
-    closeModal();
+    onBackdropClick( evt );
   }
 }
 
-export { showError };
+export {
+  showError
+};

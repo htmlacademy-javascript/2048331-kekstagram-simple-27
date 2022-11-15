@@ -1,11 +1,13 @@
 import { renderPictures } from './small-pic.js';
 import { showAlert } from './util.js';
-import { showSuccess } from './success-modal.js';
-import { showError } from './error-modal.js';
-import { closeUserModal } from './form.js';
+
+const RequestUrl = {
+  GET: 'https://27.javascript.pages.academy/kekstagram-simple/data',
+  POST: 'https://27.javascript.pages.academy/kekstagram-simple',
+};
 
 const getData = () => {
-  fetch(' https://27.javascript.pages.academy/kekstagram-simple/data')
+  fetch(RequestUrl.GET)
     .then((response) => response.json())
     .then((pictures) => {
       renderPictures(pictures);
@@ -15,21 +17,20 @@ const getData = () => {
     });
 };
 
-const sendData = (body) => {
-  fetch('https://27.javascript.pages.academy/kekstagram-simple', {
+const sendData = (body, onSuccess, onFail) => {
+  fetch(RequestUrl.POST, {
     method: 'POST',
     body,
   })
     .then((response) => {
       if (response.ok) {
-        showSuccess();
-        closeUserModal();
+        onSuccess();
         return;
       }
-      showError();
+      onFail();
     })
     .catch(() => {
-      showError();
+      onFail();
     });
 };
 

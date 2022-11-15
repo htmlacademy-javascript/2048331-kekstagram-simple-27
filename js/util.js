@@ -24,4 +24,9 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export { isEscapeKey, showAlert };
+
+const removeElementBySelector = ( selector ) => {
+  document.querySelector( selector ).remove();
+};
+
+export { isEscapeKey, showAlert, removeElementBySelector };
