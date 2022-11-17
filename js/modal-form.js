@@ -13,8 +13,16 @@ const imgUploadOverlay = form.querySelector('.img-upload__overlay');
 const uploadFile = form.querySelector('#upload-file');
 const uploadCancel = form.querySelector('#upload-cancel');
 const effectSlider = document.querySelector('.effect-level__slider');
-
+const submitButton = form.querySelector('#upload-submit');
 let handleSubmit = null;
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
 
 const setUserFormSubmit = (onSubmit) => {
   handleSubmit = onSubmit;
@@ -67,4 +75,4 @@ function onPopupEscKeydown(evt) {
 uploadFile.addEventListener('change', onUploadFileChange);
 form.addEventListener('submit', onFormSubmit);
 
-export { closeUserModal, setUserFormSubmit };
+export { closeUserModal, setUserFormSubmit, blockSubmitButton, unblockSubmitButton };

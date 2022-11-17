@@ -1,5 +1,10 @@
 import { getData, sendData } from './api.js';
-import { setUserFormSubmit, closeUserModal } from './modal-form.js';
+import {
+  setUserFormSubmit,
+  closeUserModal,
+  blockSubmitButton,
+  unblockSubmitButton,
+} from './modal-form.js';
 import { renderPictures } from './small-pic.js';
 import { showErrorMessage, showSuccessMessage } from './message.js';
 import { showAlert } from './util.js';
@@ -14,14 +19,17 @@ const onGetDataFail = () => {
 
 const onFormSubmitSuccess = () => {
   showSuccessMessage();
+  unblockSubmitButton();
   closeUserModal();
 };
 
 const onFormSubmitFail = () => {
   showErrorMessage();
+  unblockSubmitButton();
 };
 
 const onFormSubmit = (formData) => {
+  blockSubmitButton();
   sendData(formData, onFormSubmitSuccess, onFormSubmitFail);
 };
 
