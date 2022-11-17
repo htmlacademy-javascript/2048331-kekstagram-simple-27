@@ -1,10 +1,7 @@
 import { getData, sendData } from './api.js';
-import { setUserFormSubmit, closeUserModal } from './form.js';
+import { setUserFormSubmit, closeUserModal } from './modal-form.js';
 import { renderPictures } from './small-pic.js';
-
-import { showSuccess } from './success-modal.js';
-import { showError } from './error-modal.js';
-
+import { showErrorMessage, showSuccessMessage } from './message.js';
 import { showAlert } from './util.js';
 
 const onGetDataSuccess = (data) => {
@@ -16,12 +13,12 @@ const onGetDataFail = () => {
 };
 
 const onFormSubmitSuccess = () => {
-  showSuccess();
+  showSuccessMessage();
   closeUserModal();
 };
 
 const onFormSubmitFail = () => {
-  showError();
+  showErrorMessage();
 };
 
 const onFormSubmit = (formData) => {

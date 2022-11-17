@@ -1,5 +1,6 @@
-const isEscapeKey = (evt) => evt.key === 'Escape';
 const ALERT_SHOW_TIME = 5000;
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -25,8 +26,5 @@ const showAlert = (message) => {
 };
 
 
-const removeElementBySelector = ( selector ) => {
-  document.querySelector( selector ).remove();
-};
+export { isEscapeKey, showAlert };
 
-export { isEscapeKey, showAlert, removeElementBySelector };
