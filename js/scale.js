@@ -43,3 +43,4 @@ const initScale = () => {
 };
 
 export { resetScale, initScale };
+
