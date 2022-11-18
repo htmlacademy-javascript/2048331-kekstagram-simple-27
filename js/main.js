@@ -9,12 +9,16 @@ import { renderPictures } from './small-pic.js';
 import { showErrorMessage, showSuccessMessage } from './message.js';
 import { showAlert } from './util.js';
 
+const RequestMessage = {
+  GET_DATA_FAIL: 'Ошибка при загрузке данных с сервера',
+};
+
 const onGetDataSuccess = (data) => {
   renderPictures(data);
 };
 
 const onGetDataFail = () => {
-  showAlert('Ошибка при загрузке данных с сервера');
+  showAlert(RequestMessage.GET_DATA_FAIL);
 };
 
 const onFormSubmitSuccess = () => {

@@ -1,64 +1,22 @@
-const EFFECTS = [
-  {
-    name: 'none',
-    min: 0,
-    max: 100,
-    step: 1,
-  },
-  {
-    name: 'chrome',
-    style: 'grayscale',
-    min: 0,
-    max: 1,
-    step: 0.1,
-    unit: '',
-  },
-  {
-    name: 'sepia',
-    style: 'sepia',
-    min: 0,
-    max: 1,
-    step: 0.1,
-    unit: '',
-  },
-  {
-    name: 'marvin',
-    style: 'invert',
-    min: 0,
-    max: 100,
-    step: 1,
-    unit: '%',
-  },
-  {
-    name: 'phobos',
-    style: 'blur',
-    min: 0,
-    max: 3,
-    step: 0.1,
-    unit: 'px',
-  },
-  {
-    name: 'heat',
-    style: 'brightness',
-    min: 1,
-    max: 3,
-    step: 0.1,
-    unit: '',
-  },
-];
+import { getSliderOptions } from './slider-options.js';
 
-const DEFAULT_EFFECT = EFFECTS[0];
+const DEFAULT_EFFECT = 'none';
 
 const image = document.querySelector('.img-upload__preview img');
+const sliderContainer = document.querySelector('.effect-level');
 const effectSlider = document.querySelector('.effect-level__slider');
 const effectLevel = document.querySelector('.effect-level__value');
 
-let chosenEffect = DEFAULT_EFFECT;
+let chosenEffect;
 
-const isDefault = () => chosenEffect === DEFAULT_EFFECT;
+const isDefaultEffect = () => chosenEffect?.name === DEFAULT_EFFECT;
 
 const updateSlider = () => {
-  effectSlider.classList.remove('hidden');
+  if (isDefaultEffect()) {
+    sliderContainer.classList.add('hidden');
+    return;
+  }
+
   effectSlider.noUiSlider.updateOptions({
     range: {
       min: chosenEffect.min,
@@ -68,9 +26,7 @@ const updateSlider = () => {
     start: chosenEffect.max,
   });
 
-  if (isDefault()) {
-    effectSlider.classList.add('hidden');
-  }
+  sliderContainer.classList.remove('hidden');
 };
 
 const onFormChange = (evt) => {
@@ -78,37 +34,40 @@ const onFormChange = (evt) => {
     return;
   }
 
-  chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+  chosenEffect = getSliderOptions(evt.target.value);
   updateSlider();
 };
 
 const onSliderUpdate = () => {
-  image.style.filter = 'none';
-  image.className = '';
-  effectLevel.value = '';
-  if (isDefault()) {
+  image.classList.remove(`effects__preview--${chosenEffect.name}`)
+
+  if (isDefaultEffect()) {
+    effectLevel.value = '';
+    image.style.filter = DEFAULT_EFFECT;
     return;
   }
+
   const sliderValue = effectSlider.noUiSlider.get();
+  effectLevel.value = sliderValue;
+
   image.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
   image.classList.add(`effects__preview--${chosenEffect.name}`);
-  effectLevel.value = sliderValue;
 };
 
 const resetEffects = () => {
-  chosenEffect = DEFAULT_EFFECT;
-  updateSlider();
   effectSlider.noUiSlider.destroy();
 };
 
 const createSlider = () => {
+  chosenEffect = getSliderOptions(DEFAULT_EFFECT);
+
   noUiSlider.create(effectSlider, {
     range: {
-      min: DEFAULT_EFFECT.min,
-      max: DEFAULT_EFFECT.max,
+      min: chosenEffect.min,
+      max: chosenEffect.max,
     },
-    start: DEFAULT_EFFECT.max,
-    step: DEFAULT_EFFECT.step,
+    start: chosenEffect.max,
+    step: chosenEffect.step,
     connect: 'lower',
   });
 };
