@@ -1,3 +1,4 @@
+
 import { isEscapeKey } from './util.js';
 import { resetScale, initScale } from './scale.js';
 import {
@@ -14,6 +15,7 @@ const uploadFile = form.querySelector('#upload-file');
 const uploadCancel = form.querySelector('#upload-cancel');
 const effectSlider = document.querySelector('.effect-level__slider');
 const submitButton = form.querySelector('#upload-submit');
+
 let handleSubmit = null;
 
 const blockSubmitButton = () => {
